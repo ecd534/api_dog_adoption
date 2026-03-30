@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon src/server",
     "start": "node src/server",
+    "migrate": "node src/database/migrate.js",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "test": "jest"

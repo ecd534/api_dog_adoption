@@ -10,8 +10,8 @@ exports.getDog = function (id) {
 }
 
 exports.saveDog = async function (dog) {
-  const img = await getImg(dog.breeds)
-  dog.photo = img.data.message
+  const photo = await getImg(dog.breeds)
+  dog.photo = photo
   return dogsData.saveDog(dog)
 }
 
@@ -23,11 +23,13 @@ exports.deleteDog = function (id) {
   return dogsData.deleteDog(id)
 }
 
-function getImg (breeds) {
+async function getImg (breeds) {
+  if (!breeds) return null
   const breedsLowerCase = breeds.toLowerCase()
   try {
-    return axios.get(`https://dog.ceo/api/breed/${breedsLowerCase}/images/random`)
+    const response = await axios.get(`https://dog.ceo/api/breed/${breedsLowerCase}/images/random`)
+    return response.data.message || null
   } catch (error) {
-    console.error(error)
+    return null
   }
 }
